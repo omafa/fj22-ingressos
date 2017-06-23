@@ -104,6 +104,7 @@ public class FilmeController {
 		
 		modelAndView.addObject("sessoes", sessoes);
 		modelAndView.addObject("detalhes", detalhesDoFilme.orElse(new DetalhesDoFilme()));
+		
 		return modelAndView;
 
 	}
