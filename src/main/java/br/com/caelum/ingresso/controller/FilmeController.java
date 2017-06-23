@@ -1,5 +1,6 @@
 package br.com.caelum.ingresso.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.caelum.ingresso.dao.FilmeDao;
+import br.com.caelum.ingresso.dao.SessaoDao;
 import br.com.caelum.ingresso.model.Filme;
+import br.com.caelum.ingresso.model.Sessao;
 
 /**
  * Created by nando on 03/03/17.
@@ -27,6 +30,9 @@ public class FilmeController {
 
     @Autowired
     private FilmeDao filmeDao;
+    
+    @Autowired
+    private SessaoDao sessaoDao;
 
 
     @GetMapping({"/admin/filme", "/admin/filme/{id}"})
@@ -85,6 +91,19 @@ public class FilmeController {
     	modelAndView.addObject("filmes", filmeDao.findAll());
     	
     	return modelAndView;
+    }
+    
+    @GetMapping("/filme/{id}/detalhe")
+    public ModelAndView detalhes(@PathVariable("id") Integer id){
+    	ModelAndView modelAndView = new ModelAndView("/filme/detalhe");
+    	
+    	
+    	Filme filme = filmeDao.findOne(id);
+    	List<Sessao> sessoes = sessaoDao.buscaSessoesDoFilme(filme);
+    	
+    	modelAndView.addObject("sessoes",sessoes);
+    	return modelAndView;
+    	
     }
 
 }
