@@ -34,6 +34,7 @@
 
 					<li><a href="/admin/filmes">Filmes</a></li>
 					<li><a href="/admin/salas">Salas</a></li>
+					<li><a href="/filme/em-cartaz">Em Cartaz</a></li>
 
 
 					<sec:authorize access="!isAuthenticated()">
