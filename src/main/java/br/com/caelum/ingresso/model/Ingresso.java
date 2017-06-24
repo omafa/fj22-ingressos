@@ -12,6 +12,14 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Ingresso {
 
+	public TipodeIngresso getTipoDeIngresso() {
+		return tipoDeIngresso;
+	}
+
+	public void setTipoDeIngresso(TipodeIngresso tipoDeIngresso) {
+		this.tipoDeIngresso = tipoDeIngresso;
+	}
+
 	@Id
 	@GeneratedValue
 	private Integer id;

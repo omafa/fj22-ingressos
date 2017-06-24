@@ -30,13 +30,13 @@
 			<h2>Lugares</h2>
 			<table class="table-compra" id="lugares">
 				<tbody>
-					<c:forEach var="map" items="${lugaresDaSessao}">
+					<c:forEach var="map" items="${sessao.mapaDeLugares}">
 						<tr class="fileira">
 							<td class="fileira-valor">${map.key}</td>
 							<td class="fileira-assentos">
 							<table>
 								<tr>
-								<c:forEach var="info" items="${map.value}">
+								<c:forEach var="lugar" items="${map.value}">
 									<td class="fileira-assento"><figure>
 										<svg class="assento	${sessao.isDisponivel(lugar) ? "disponivel"	: "ocupado"	}"onclick="${sessao.
 isDisponivel(lugar)?'changeCheckbox(this)'	:	''	}"	id="${lugar.id}" version="1.0"	xmlns="http://www.w3.org/2000/svg"	xmlns:xlink="http://www.w3.org/1999/xlink"	x="0px"	y="0px"	viewBox="00318.224305.246"	enable-background="new	
