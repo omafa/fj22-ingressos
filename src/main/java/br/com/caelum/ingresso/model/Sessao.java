@@ -1,14 +1,17 @@
 package br.com.caelum.ingresso.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
+/**
+ * Created by nando on 03/03/17.
+ */
 @Entity
 public class Sessao {
 
@@ -22,18 +25,39 @@ public class Sessao {
 
 	@ManyToOne
 	private Filme filme;
-	
+
 	private BigDecimal preco;
 
-	public Sessao() {
+	@OneToMany(mappedBy = "sessao", fetch = FetchType.EAGER)
+	private Set<Ingresso> ingressos = new HashSet<>();
 
+	/**
+	 * @deprecated hibernate only
+	 */
+	public Sessao() {
 	}
 
 	public Sessao(LocalTime horario, Filme filme, Sala sala) {
 		this.horario = horario;
 		this.setFilme(filme);
 		this.sala = sala;
-		this.preco = filme.getPreco().add(sala.getPreco());
+		this.preco = sala.getPreco().add(filme.getPreco());
+	}
+
+	public Map<String, List<Lugar>> getMapaDeLugares() {
+		return sala.getMapaDeLugares();
+	}
+
+	public boolean isDisponivel(Lugar lugar) {
+		return ingressos.stream().map(Ingresso::getLugar).noneMatch(l -> l.equals(lugar));
+	}
+
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
 	}
 
 	public Integer getId() {
@@ -52,14 +76,6 @@ public class Sessao {
 		this.horario = horario;
 	}
 
-	public Sala getSala() {
-		return sala;
-	}
-
-	public void setSala(Sala sala) {
-		this.sala = sala;
-	}
-
 	public Filme getFilme() {
 		return filme;
 	}
@@ -76,7 +92,7 @@ public class Sessao {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
+	public void setIngressos(Set<Ingresso> ingressos) {
+		this.ingressos = ingressos;
 	}
 }
